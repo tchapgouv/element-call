@@ -126,7 +126,8 @@ jobs:
           echo "ARTIFACT_VERSION=$(jq '.version' --raw-output package.json)" >> "$GITHUB_ENV"
           npm publish --provenance --access public --tag ${{ needs.versioning.outputs.TAG }} ${{ needs.versioning.outputs.DRY_RUN == 'true' && '--dry-run' || '' }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_TOKEN }}
+          NEEDS_VERSIONING_OUTPUTS_PREFIXED_VERSION: ${{ needs.versioning.outputs.PREFIXED_VERSION }}
+          NEEDS_VERSIONING_OUTPUTS_TAG: ${{ needs.versioning.outputs.TAG }}
 
       - id: artifact_version
         name: Output artifact version
